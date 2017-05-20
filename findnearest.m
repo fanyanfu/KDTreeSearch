@@ -22,7 +22,7 @@ function [] = findnearest(X2, node, pos, obj, k, neighbor , includeTies)
     if(farthernode)
         rect = [obj.lowerBounds(farthernode,:)', obj.upperBounds(farthernode,:)'];
         farther_dist = hyperrectdist(rect, pos);
-        if(farther_dist < temp(end, 1))
+        if(farther_dist < temp(end, 2))
             if(~obj.leafNode(farthernode))
                 findnearest(X2, farthernode, pos, obj, k, neighbor , includeTies);
             else
