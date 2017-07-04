@@ -4,15 +4,13 @@ function dist = hyperrectdist(rect, pos)
 %          max-value
 % pos   -- position of that node
 %
-dist = 0;
-num_f = length(pos);
-for i = 1:num_f
-    if(pos(i)<rect(i,1))
-        dist = dist + (rect(i,2)-pos(i))^2;
-    elseif(pos(i)>rect(i,2))
-        dist = dist + (pos(i)-rect(i,1))^2;
-    end
-end
-dist = sqrt(dist);
+lowerbound = rect(:,1);
+upperbound = rect(:,2);
+a = pos > lowerbound & pos < upperbound;
+bound_pos = zeros(length(pos),1);
+bound_pos(a) = 0;
+bound_pos(~a) = max([lowerbound(~a)-pos(~a),pos(~a)-upperbound(~a)],[],2);
+bound_pos(bound_pos == -Inf) = 0;
+dist = sqrt(sum(bound_pos.^2));
 end
 
